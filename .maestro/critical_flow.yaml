@@ -1,0 +1,44 @@
+appId: com.dog_breed_app
+---
+# Critical User Flow E2E Test: Browse, Filter, and View Details
+
+- launchApp:
+    clearState: false
+
+# 1. Verify breed list and freshness badge are visible
+- assertVisible:
+    text: ".*breeds.*"
+
+# 2. Perform debounced search by name
+- tapOn:
+    id: "Search breeds input"
+- inputText: "Retriever"
+- hideKeyboard
+
+# 3. Open filters modal
+- tapOn:
+    id: "Open filters modal, .* active filters"
+- assertVisible: "Breed Groups"
+
+# 4. Select Sporting Group and apply
+- tapOn: "Sporting Group"
+- tapOn:
+    text: "Show .* Breeds"
+
+# 5. Tap on Golden Retriever card to open detail view
+- tapOn: "Golden Retriever.*"
+- assertVisible: "About the Breed"
+- assertVisible: "Physical Attributes & Lifespan"
+
+# 6. Navigate across detail tabs
+- tapOn: "Traits & Scale"
+- assertVisible: "Behavioral & Physical Traits"
+
+- tapOn:
+    text: "Gallery.*"
+- assertVisible: "Attribution & Licensing"
+
+# 7. Return to main list
+- tapOn: "‹ Breeds"
+- assertVisible:
+    text: ".*breeds.*"
